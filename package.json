@@ -1,0 +1,30 @@
+{
+  "name": "wbs_festival_finder_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "set DEBUG=app,app:*& nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "4.3.1",
+    "express": "4.17.1",
+    "morgan": "1.10.0",
+    "nodemon": "2.0.7"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 3000,
+      "SERVER_URL": "localhost:3000"
+    }
+  }
+}
