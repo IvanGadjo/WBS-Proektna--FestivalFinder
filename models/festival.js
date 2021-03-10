@@ -7,7 +7,8 @@ const FestivalSchema = new Schema({
     date: {type: Date, requred: false},
     website: {type: String},
     image: {type: String},
-    genre: {type: String}
+    genre: {type: String},
+    location: {type: String}
 })
 
 module.exports = mongoose.model('Festival', FestivalSchema)
