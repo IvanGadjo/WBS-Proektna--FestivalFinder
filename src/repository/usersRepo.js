@@ -54,3 +54,4 @@ const addFestivaltoUser = async(req) => {
         return `cannot add the festival to the user with id:${id}`
     }
 }
+
