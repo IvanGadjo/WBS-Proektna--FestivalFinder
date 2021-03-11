@@ -16,7 +16,7 @@
     "mongoose": "^5.11.19",
     "morgan": "1.10.0",
     "nodemon": "2.0.7",
-    "sparqljs": "3.4.1"
+    "sparqljs": "^3.4.1"
   },
   "nodemonConfig": {
     "restartable": "rs",
