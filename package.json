@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set DEBUG=app,app:*& nodemon app.js"
+    "start": "set DEBUG=app,app:*& nodemon app.js",
+    "lint": "eslint server.js"
   },
   "author": "",
   "license": "ISC",
@@ -14,7 +15,8 @@
     "express": "4.17.1",
     "mongoose": "^5.11.19",
     "morgan": "1.10.0",
-    "nodemon": "2.0.7"
+    "nodemon": "2.0.7",
+    "sparqljs": "3.4.1"
   },
   "nodemonConfig": {
     "restartable": "rs",
@@ -29,7 +31,7 @@
     }
   },
   "devDependencies": {
-    "eslint": "^7.21.0",
+    "eslint": "7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1"
   }
