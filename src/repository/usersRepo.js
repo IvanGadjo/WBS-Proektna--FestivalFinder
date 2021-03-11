@@ -52,4 +52,23 @@ const addFestivaltoUser = async (req) => {
     }
 };
 
+const removeFestivalFromUser = async (req) => {
+    const { id } = req.params;
+    const { festivalId } = req.body;
+    const objectId = mongoose.Types.ObjectId(id);
+    try {
+        const currentUser = await User.findById(id);
+        const index = currentUser.festivals.indexOf(festivalId);
+        currentUser.festivals.splice(index, 1);
+        const res = await (await User.findByIdAndUpdate(objectId, currentUser, { new: true })).exec();
+        return res;
+    } catch (error) {
+        debug(error);
+        return `Cannot delete festival with the id:${id}`;
+    }
+};
 
+module.exports.createNewUser = createNewUser;
+module.exports.getUserById = getUserById;
+module.exports.addFestivaltoUser = addFestivaltoUser;
+module.exports.removeFestivalFromUser = removeFestivalFromUser;
