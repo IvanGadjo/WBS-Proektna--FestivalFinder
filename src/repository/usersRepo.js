@@ -4,10 +4,10 @@ const User = require('../models/user');
 const Festival = require('../models/festival');
 
 
-const createNewUser = async (email, festivals) => {
+const createNewUser = async (req) => {
+    const { email }  = req.body;
     const newUser = new User({
         email,
-        festivals
     });
     try {
         const result = await newUser.save();

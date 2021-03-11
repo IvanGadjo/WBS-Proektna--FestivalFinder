@@ -5,6 +5,15 @@ const sparqlService = require('../services/sparqlService');
 
 function usersController() {
 
+    const createNewUser = (req, res) => {
+        (async () => {
+            const result = await usersRepo.createNewUser(req);
+            res.json(result);
+        })();
+    };
+
+    
+    
     const searchFestivals = (req, res) => {
         (async () => {
             const result = await sparqlService.searchFestivals('');
@@ -13,6 +22,7 @@ function usersController() {
     };
 
     return {
+        createNewUser,
         searchFestivals
     };
 }
