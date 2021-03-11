@@ -4,8 +4,11 @@ const usersController = require('../controllers/usersController');
 const usersRouter = express.Router();
 
 function router() {
-    const { searchFestivals } = usersController();
+    const { createNewUser, addFestivalToUser, removeFestivalFromUser, searchFestivals, } = usersController();
     usersRouter.route('/searchFestivals').get(searchFestivals);
+    usersRouter.route('/createNewUser').post(createNewUser);
+    usersRouter.route('/addFestival').patch(addFestivalToUser);
+    usersRouter.route('/removeFestival').patch(removeFestivalFromUser);
 
     return usersRouter;
 }

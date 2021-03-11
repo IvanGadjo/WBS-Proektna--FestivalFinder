@@ -1,4 +1,4 @@
-const debug = require('debug')('app:usersController');
+//const debug = require('debug')('app:usersController');
 const usersRepo = require('../repository/usersRepo');
 const sparqlService = require('../services/sparqlService');
 
@@ -12,7 +12,19 @@ function usersController() {
         })();
     };
 
-    
+    const addFestivalToUser = (req, res) => {
+        (async () => {
+            const result = await usersRepo.addFestivaltoUser(req);
+            res.json(result);
+        })();
+    };
+
+    const removeFestivalFromUser = (req, res) => {
+        (async () => {
+            const result = await usersRepo.removeFestivalFromUser(req);
+            res.json(result);
+        })();
+    };
     
     const searchFestivals = (req, res) => {
         (async () => {
@@ -23,6 +35,8 @@ function usersController() {
 
     return {
         createNewUser,
+        addFestivalToUser,
+        removeFestivalFromUser,
         searchFestivals
     };
 }

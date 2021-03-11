@@ -6,7 +6,9 @@ const usersRouter = require('./src/routes/usersRouter')();
 const app = express();
 
 
-// middlewate
+// middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
 
