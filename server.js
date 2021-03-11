@@ -7,11 +7,8 @@ const path = require('path');
 const app = express();
 
 
-
 // middlewate
 app.use(morgan('tiny'));
-
-
 
 
 app.get('/', (req, resp) => {
@@ -21,5 +18,5 @@ app.get('/', (req, resp) => {
 
 const port = 3000;
 app.listen(port, () => {
-    debug(`Running on port ${port}`)
+    debug(`Running on port ${port}`);
 });
