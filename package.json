@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set DEBUG=app,app:*& nodemon app.js"
+    "start": "set DEBUG=app,app:*& nodemon app.js",
+    "lint": "eslint server.js"
   },
   "author": "",
   "license": "ISC",
