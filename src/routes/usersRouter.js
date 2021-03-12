@@ -5,7 +5,7 @@ const usersRouter = express.Router();
 
 function router() {
     const { createNewUser, addFestivalToUser, removeFestivalFromUser, searchFestivals, } = usersController();
-    usersRouter.route('/searchFestivals').get(searchFestivals);
+    usersRouter.route('/searchFestivals/:country/:genre').get(searchFestivals);
     usersRouter.route('/createNewUser').post(createNewUser);
     usersRouter.route('/addFestival').patch(addFestivalToUser);
     usersRouter.route('/removeFestival').patch(removeFestivalFromUser);
