@@ -11,4 +11,4 @@ const FestivalSchema = new Schema({
     location: { type: String }
 });
 
-module.exports = mongoose.model('Festival', FestivalSchema)
+module.exports = mongoose.model('Festival', FestivalSchema);

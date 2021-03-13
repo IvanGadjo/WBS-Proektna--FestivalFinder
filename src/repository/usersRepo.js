@@ -18,8 +18,7 @@ const createNewUser = async (req) => {
     }
 };
 
-const getUserById = async (req) => {
-    const { id } = req.params;
+const getUserById = async (id) => {
     try {
         const res = await User.findById(id).exec();
         return res;

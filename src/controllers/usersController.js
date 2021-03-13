@@ -12,6 +12,13 @@ function usersController() {
         })();
     };
 
+    const getUserById = (req, res) => {
+        (async () => {
+            const result = await usersRepo.getUserById(req);
+            res.json(result);
+        })();
+    };
+
     const addFestivalToUser = (req, res) => {
         (async () => {
             const result = await usersRepo.addFestivaltoUser(req);
@@ -38,6 +45,7 @@ function usersController() {
 
     return {
         createNewUser,
+        getUserById,
         addFestivalToUser,
         removeFestivalFromUser,
         searchFestivals
