@@ -13,7 +13,6 @@ function sparqlService() {
 
 
         const constructFestivalsArray = (theStream) => {
-
             
             // eslint-disable-next-line prefer-const
             let nizaFestivali = [];
@@ -126,8 +125,36 @@ function sparqlService() {
         };
 
 
+        const filterArrayByGenre = (festivalsArray, festivalGenre) => {
 
+            // FIXME: It should exclude all predefined genres
+            if (genre === 'other')
+                return festivalsArray;
+            
+            return festivalsArray.filter(fstvl => fstvl.genres.includes(festivalGenre));
+            
+        };
 
+        const removeBlankValues = (festivalsArray) => {
+
+            const cleanedFestivalsArray = [];
+
+            festivalsArray.forEach(fstvl => {
+
+                const newFestival = {};
+
+                newFestival.name = fstvl.name;
+                newFestival.image = fstvl.image;
+                newFestival.locations = fstvl.locations.filter(Boolean);
+                newFestival.genres = fstvl.genres.filter(Boolean);
+                newFestival.websites = fstvl.websites.filter(Boolean);
+                newFestival.dates = fstvl.dates.filter(Boolean);
+
+                cleanedFestivalsArray.push(newFestival);
+            });
+
+            return cleanedFestivalsArray;
+        };
 
         const endpointUrl = 'https://dbpedia.org/sparql';
         const client = new SparqlClient({ endpointUrl });
@@ -160,9 +187,17 @@ function sparqlService() {
         // construct an array of festivals
         const festivalsArray = await constructFestivalsArray(stream);
 
+        // clean the empty values in the props of the festivals
+        const cleanedFestivalsArray = removeBlankValues(festivalsArray);
+
+        // filter the array by category
+        const filteredFestivalArray = filterArrayByGenre(cleanedFestivalsArray, genre);
+
         debug('-------KRAJ: ', festivalsArray);
         debug('-------BR FEST: ', festivalsArray.length);
 
+
+        return filteredFestivalArray;
 
     };
 
