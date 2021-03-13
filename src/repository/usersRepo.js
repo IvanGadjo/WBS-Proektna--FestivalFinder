@@ -5,8 +5,9 @@ const Festival = require('../models/festival');
 
 
 const createNewUser = async (req) => {
-    const { email }  = req.body;
+    const { name, email }  = req.body;
     const newUser = new User({
+        name,
         email,
     });
     try {
