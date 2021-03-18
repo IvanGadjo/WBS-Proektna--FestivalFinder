@@ -93,7 +93,7 @@ function sparqlService() {
                                     if (!fstvl.websites.includes(vrednost))
                                         fstvl.websites.push(vrednost);
             
-                                } else {      //key = slika
+                                } else if (key === 'slika') {      //key = slika
 
                                     // eslint-disable-next-line no-param-reassign
                                     fstvl.image = vrednost;
@@ -124,7 +124,7 @@ function sparqlService() {
             // return nizaFestivali;
         };
 
-
+        // FIXME:
         const filterArrayByGenre = (festivalsArray, festivalGenre) => {
 
             // FIXME: It should exclude all predefined genres
@@ -156,11 +156,14 @@ function sparqlService() {
             return cleanedFestivalsArray;
         };
 
+
+
         const endpointUrl = 'https://dbpedia.org/sparql';
         const client = new SparqlClient({ endpointUrl });
         
 
-        const query = `
+        // subject: List_of_music_festivals_in_${country}
+        const query1 = `
         PREFIX foaf: <http://xmlns.com/foaf/0.1/>
         PREFIX dbr: <http://dbpedia.org/resource/>
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -181,23 +184,73 @@ function sparqlService() {
         }`;
 
 
-        // execute the query
-        const stream = await client.query.select(query);
+        // object: Music_festivals_in_${country}
+        const query2 = `
+        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX dbr: <http://dbpedia.org/resource/>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        PREFIX dbo: <http://dbpedia.org/ontology/>
+        PREFIX dbp: <http://dbpedia.org/property/>
+        SELECT ?festivali, ?topic, ?zanr, ?dati, ?sleden, ?websajt, ?posleden_pat, ?slika, ?lokacija
+        WHERE {
+            ?festivali dbo:wikiPageWikiLink dbc:Music_festivals_in_${country}.
+            ?festivali rdfs:label ?topic.
+            
+            ?festivali dbp:genre ?zanr. #mozebi treba dbo:genre
+            optional {?festivali dbp:dates ?dati}.
+            optional {?festivali dbp:next ?sleden}.
+            optional {?festivali dbo:wikiPageExternalLink ?websajt}.
+            optional {?festivali dbp:last ?posleden_pat}.
+            optional {?festivali dbo:thumbnail ?slika}
+            optional {?festivali dbp:location ?lokacija}
+            filter(lang(?topic)="en")
+            }
+        `;
+
+
+        // execute the queries
+        const stream = await client.query.select(query1);
+        const stream2 = await client.query.select(query2);
 
         // construct an array of festivals
         const festivalsArray = await constructFestivalsArray(stream);
+        const festivalsArray2 = await constructFestivalsArray(stream2);
 
         // clean the empty values in the props of the festivals
         const cleanedFestivalsArray = removeBlankValues(festivalsArray);
+        const cleanedFestivalsArray2 = removeBlankValues(festivalsArray2);
 
         // filter the array by category
         const filteredFestivalArray = filterArrayByGenre(cleanedFestivalsArray, genre);
-
-        debug('-------KRAJ: ', festivalsArray);
-        debug('-------BR FEST: ', festivalsArray.length);
+        const filteredFestivalArray2 = filterArrayByGenre(cleanedFestivalsArray2, genre);
 
 
-        return filteredFestivalArray;
+
+        // debug('-------KRAJ: ', festivalsArray);
+        // debug('-------BR FEST 1: ', festivalsArray.length);
+
+        // debug('-------KRAJ: ', festivalsArray2);
+        // debug('-------BR FEST 2: ', festivalsArray2.length);
+
+
+
+        // const result = [...filteredFestivalArray, ...filteredFestivalArray2];
+        // debug('-------BR FEST KRAJ: ', result.length);
+
+
+        // TODO: Najloshoto resenie vo svetot
+        const my = new Set(filteredFestivalArray);
+        filteredFestivalArray2.forEach(f => {
+            if (!Array.from(my).map(ff => ff.name).includes(f.name))
+                my.add(f);
+        });
+        const finalArr = Array.from(my);
+        
+
+        // return filteredFestivalArray;
+        // return filteredFestivalArray2;
+        // return result;
+        return finalArr;
 
     };
 

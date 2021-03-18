@@ -38,7 +38,7 @@ function usersController() {
             const { country, genre } = req.params; 
 
             // const result = await sparqlService.searchFestivals(country, genre);
-            const result = await sparqlService.searchFestivals('South_Korea', 'other');
+            const result = await sparqlService.searchFestivals(country, 'other');
             res.json(result); 
         })();
     };
