@@ -1,23 +1,7 @@
 const mongoose = require('mongoose');
 const debug = require('debug')('app:mongoose');
-const User = require('../models/user');
-const Festival = require('../models/festival');
-
-
-const createNewUser = async (req) => {
-    const { name, email }  = req.body;
-    const newUser = new User({
-        name,
-        email,
-    });
-    try {
-        const result = await newUser.save();
-        return result;
-    } catch (error) {
-        debug(error);
-        return error;
-    }
-};
+const User = require('../models/User');
+const Festival = require('../models/Festival');
 
 const getUserById = async (id) => {
     try {
@@ -68,7 +52,6 @@ const removeFestivalFromUser = async (req) => {
     }
 };
 
-module.exports.createNewUser = createNewUser;
 module.exports.getUserById = getUserById;
 module.exports.addFestivaltoUser = addFestivaltoUser;
 module.exports.removeFestivalFromUser = removeFestivalFromUser;

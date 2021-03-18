@@ -20,7 +20,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
 // Sessions
-
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    // store value to be added later for mongo connection
+  }));
 
 // Passport middleware
 app.use(passport.initialize());
