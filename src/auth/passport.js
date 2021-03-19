@@ -11,7 +11,6 @@ module.exports = function (passport) {
             callbackURL: '/auth/google/callback'  
         },
     async (accessToken, refreshToken, profile, done) => {
-        // eslint-disable-next-line no-console
         const newUser = {
             googleId: profile.id,
             displayName: profile.displayName,
