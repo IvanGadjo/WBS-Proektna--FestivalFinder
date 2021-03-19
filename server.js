@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const session = require('express-session');
 const passport = require('passport');
-const usersRouter = require('./src/routes/usersRouter')();
+const connectDB = require('./config/mongo');
 
 const app = express();
 
@@ -13,6 +13,8 @@ dotenv.config({ path: './config/config.env' });
 
 // Passport config
 require('./src/auth/passport')(passport);
+
+connectDB();
 
 // Middleware
 app.use(express.json());
@@ -37,7 +39,7 @@ app.get('/', (req, resp) => {
 });
 app.use('/auth', require('./src/routes/authRouter'));
 
-app.use('/user', usersRouter);
+app.use('/user', require('./src/routes/usersRouter'));
 
 const port = 3000;
 app.listen(port, () => {

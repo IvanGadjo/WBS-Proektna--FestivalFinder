@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 // Google auth callback
-router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/login' }),
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         res.redirect('/');
     });
@@ -16,7 +16,7 @@ router.get('/google/callback', passport.authenticate('google', { failureRedirect
 // Logout user
 // passport middleware provides a logout method within the request object once we log in
 router.get('/logout', (req, res) => {
-    req.logOut();
+    req.logout();
     res.redirect('/');
 });
 
