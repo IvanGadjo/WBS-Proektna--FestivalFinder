@@ -1,6 +1,7 @@
-//const debug = require('debug')('app:usersController');
+// const debug = require('debug')('app:usersController');
 const usersRepo = require('../repository/usersRepo');
 const sparqlService = require('../services/sparqlService');
+const defaultMusicGenres = require('../../config/defaultMusicGenres');
 
 
 function usersController() {
@@ -33,12 +34,16 @@ function usersController() {
         })();
     };
     
-    const searchFestivals = (req, res) => {
+    const searchFestivals = (req, res, err) => {
         (async () => {
             const { country, genre } = req.params; 
 
-            // const result = await sparqlService.searchFestivals(country, genre);
-            const result = await sparqlService.searchFestivals(country, 'other');
+
+            if (!defaultMusicGenres.includes(genre))
+                err('Provided genre not in default genres list');
+                
+
+            const result = await sparqlService.searchFestivals(country, genre);
             res.json(result); 
         })();
     };

@@ -1,5 +1,6 @@
 const debug = require('debug')('app:sparqlService');
 const SparqlClient = require('sparql-http-client');
+const defaultMusicGenres = require('../../config/defaultMusicGenres');
 
 
 
@@ -124,12 +125,32 @@ function sparqlService() {
             // return nizaFestivali;
         };
 
-        // FIXME:
         const filterArrayByGenre = (festivalsArray, festivalGenre) => {
 
-            // FIXME: It should exclude all predefined genres
-            if (genre === 'other')
-                return festivalsArray;
+
+            
+            if (genre === 'Other') {
+
+
+                const newFestivalsArray = festivalsArray.filter(fstvl => {
+
+                    let hasDefaultGenre = false;
+                    defaultMusicGenres.forEach(dmg => {
+                        
+                        if (fstvl.genres.includes(dmg)) {
+                            debug('Contains main genre: ', fstvl.name);
+                            hasDefaultGenre = true;
+                        }  
+                            
+                    });
+
+                    return !hasDefaultGenre;
+                });
+                return newFestivalsArray;
+
+
+            }
+                
             
             return festivalsArray.filter(fstvl => fstvl.genres.includes(festivalGenre));
             
@@ -263,5 +284,3 @@ function sparqlService() {
 }
 
 module.exports = sparqlService();
-
-
