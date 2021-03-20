@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const FestivalSchema = new Schema({
     name: { type: String, required: true },
-    date: { type: Date, requred: false },
+    date: { type: String, requred: false },
     website: { type: String },
     image: { type: String },
     genre: { type: String },

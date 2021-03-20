@@ -42,9 +42,12 @@ const removeFestivalFromUser = async (req) => {
     const objectId = mongoose.Types.ObjectId(id);
     try {
         const currentUser = await User.findById(id);
-        const index = currentUser.festivals.indexOf(festivalId);
+        debug(currentUser);
+        const index = currentUser.festivals.map(f => f.id).indexOf(festivalId);
+        debug(index);
         currentUser.festivals.splice(index, 1);
-        const res = await (await User.findByIdAndUpdate(objectId, currentUser, { new: true })).exec();
+        debug(currentUser);
+        const res = await User.findByIdAndUpdate(objectId, currentUser, { new: true }).exec();
         return res;
     } catch (error) {
         debug(error);

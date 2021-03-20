@@ -39,7 +39,7 @@ app.get('/', (req, resp) => {
 });
 app.use('/auth', require('./src/routes/authRouter'));
 
-app.use('/user', require('./src/routes/usersRouter'));
+app.use('/user', require('./src/routes/usersRouter')());
 
 const port = 3000;
 app.listen(port, () => {

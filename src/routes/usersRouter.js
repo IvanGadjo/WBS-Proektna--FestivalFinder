@@ -6,8 +6,8 @@ const usersRouter = express.Router();
 function router() {
     const { addFestivalToUser, removeFestivalFromUser, searchFestivals, } = usersController();
     usersRouter.route('/searchFestivals/:country/:genre').get(searchFestivals);
-    usersRouter.route('/addFestival').patch(addFestivalToUser);
-    usersRouter.route('/removeFestival').patch(removeFestivalFromUser);
+    usersRouter.route('/addFestival/:id').patch(addFestivalToUser);
+    usersRouter.route('/removeFestival/:id').patch(removeFestivalFromUser);
 
     return usersRouter;
 }
