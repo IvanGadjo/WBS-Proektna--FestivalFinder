@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 const mongoose = require('mongoose');
+const debug = require('debug')('app:mongo');
 
 // eslint-disable-next-line consistent-return
 const connectDB = async () => {
@@ -12,7 +12,7 @@ const connectDB = async () => {
         return conn.connection.getClient();
         //console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (err) {
-        console.error(err);
+        debug(err);
         process.exit(1);
     }
 };
