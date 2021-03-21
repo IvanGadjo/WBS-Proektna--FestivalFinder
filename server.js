@@ -2,7 +2,9 @@ const express = require('express');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const connectDB = require('./config/mongo');
 
@@ -26,7 +28,9 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    // store value to be added later for mongo connection
+    store: MongoStore.create({
+        mongoUrl: mongoose.connection.client.s.url
+    })
   }));
 
 // Passport middleware
@@ -34,9 +38,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.get('/', (req, resp) => {
-    resp.send('Welcome to Festival Finder!');
-});
+app.use('/', require('./src/routes/indexRouter'));
+
 app.use('/auth', require('./src/routes/authRouter'));
 
 app.use('/user', require('./src/routes/usersRouter')());
