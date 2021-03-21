@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const mongoose = require('mongoose');
 
+// eslint-disable-next-line consistent-return
 const connectDB = async () => {
     try {
         const conn = await mongoose.connect(process.env.MONGO_URI, {
