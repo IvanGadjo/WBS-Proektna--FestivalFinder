@@ -2,7 +2,6 @@ const express = require('express');
 const debug = require('debug')('app');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
@@ -16,7 +15,7 @@ dotenv.config({ path: './config/config.env' });
 // Passport config
 require('./src/auth/passport')(passport);
 
-connectDB();
+const clientP = connectDB();
 
 // Middleware
 app.use(express.json());
@@ -29,7 +28,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: mongoose.connection.client.s.url
+        clientPromise: clientP
     })
   }));
 
