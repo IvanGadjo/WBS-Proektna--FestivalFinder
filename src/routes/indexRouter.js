@@ -1,17 +1,21 @@
 const express = require('express');
+const debug = require('debug')('app:indexRouter');
 
 const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
+const usersController = require('../controllers/usersController');
 
-const User = require('../models/User');
+
+
+
+const { getUserById } = usersController();
+
 
 router.get('/fetchUser', ensureAuth, async (req, res) => {
     try {
-        const currentUser = await User.findById(req.user.id).exec();
-        res.json(currentUser);
+        getUserById(req, res);
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
+        debug(err);
     }
 });
 

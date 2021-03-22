@@ -3,7 +3,10 @@ const debug = require('debug')('app:mongoose');
 const User = require('../models/User');
 const Festival = require('../models/Festival');
 
-const getUserById = async (id) => {
+const getUserById = async (req) => {
+
+    // this works only if the user is logged in
+    const { id } = req.user;
     try {
         const res = await User.findById(id).exec();
         return res;
