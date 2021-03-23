@@ -3,6 +3,7 @@ const debug = require('debug')('app');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const session = require('express-session');
+const cors = require('cors');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const connectDB = require('./config/mongo');
@@ -35,6 +36,7 @@ app.use(session({
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 // Routes
 app.use('/', require('./src/routes/indexRouter'));
