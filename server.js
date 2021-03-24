@@ -23,20 +23,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
+app.use(cors({ origin: 'http://localhost:3001' }));
+
 // Sessions
-app.use(session({
+app.use(
+  session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        clientPromise: clientP
-    })
-  }));
+      clientPromise: clientP,
+    }),
+  })
+);
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
 
 // Routes
 app.use('/', require('./src/routes/indexRouter'));
@@ -47,5 +50,5 @@ app.use('/user', require('./src/routes/usersRouter')());
 
 const port = 3000;
 app.listen(port, () => {
-    debug(`Running on port ${port}`);
+  debug(`Running on port ${port}`);
 });
