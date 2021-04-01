@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan('tiny'));
 
-app.use(cors({ origin: 'http://localhost:3001' }));
+app.use(cors({ origin: 'http://localhost:3000',  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE', credentials: true }));
 
 // Sessions
 app.use(
@@ -48,7 +48,7 @@ app.use('/auth', require('./src/routes/authRouter'));
 
 app.use('/user', require('./src/routes/usersRouter')());
 
-const port = 3000;
-app.listen(port, () => {
-  debug(`Running on port ${port}`);
+
+app.listen(process.env.PORT_NM, () => {
+  debug(`Running on port ${process.env.PORT_NM}`);
 });

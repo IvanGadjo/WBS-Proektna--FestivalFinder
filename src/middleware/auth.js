@@ -5,7 +5,9 @@ module.exports = {
             return next();
         // eslint-disable-next-line no-else-return
         } else {
-            res.redirect('/');
+            res.status(400).json({
+                message: 'User not Authenticated'
+            });
         }
     },
 };
