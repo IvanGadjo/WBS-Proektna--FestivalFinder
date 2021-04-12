@@ -29,7 +29,7 @@ const addFestivaltoUser = async (req) => {
     const { id } = req.params;
     const objectId = mongoose.Types.ObjectId(id);
     try {
-        const currentUser = await User.findById(id);
+        const currentUser = await User.findById(id).exec();
         currentUser.festivals.push(newFestival);
         const res = await User.findByIdAndUpdate(objectId, currentUser, { new: true }).exec();
         return res;
@@ -39,12 +39,24 @@ const addFestivaltoUser = async (req) => {
     }
 };
 
+const getFestivalsFromUser = async (req) => {
+
+    const { id } = req.user;
+    try {
+        const user = await User.findById(id).exec();
+        return user.festivals;
+    } catch (error) {
+        debug(error);
+        return `Cannot with user with id:${id}`;
+    }
+};
+
 const removeFestivalFromUser = async (req) => {
     const { id } = req.params;
     const { festivalId } = req.body;
     const objectId = mongoose.Types.ObjectId(id);
     try {
-        const currentUser = await User.findById(id);
+        const currentUser = await User.findById(id).exec();
         debug(currentUser);
         const index = currentUser.festivals.map(f => f.id).indexOf(festivalId);
         debug(index);
@@ -61,3 +73,4 @@ const removeFestivalFromUser = async (req) => {
 module.exports.getUserById = getUserById;
 module.exports.addFestivaltoUser = addFestivaltoUser;
 module.exports.removeFestivalFromUser = removeFestivalFromUser;
+module.exports.getFestivalsFromUser = getFestivalsFromUser;
