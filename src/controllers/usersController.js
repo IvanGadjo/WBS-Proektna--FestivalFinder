@@ -27,6 +27,13 @@ function usersController() {
         })();
     };
 
+    const getFestivalsFromUser = (req, res) => {
+        (async () => {
+            const result = await usersRepo.getFestivalsFromUser(req);
+            res.json(result);
+        })();
+    };
+
     const removeFestivalFromUser = (req, res) => {
         (async () => {
             const result = await usersRepo.removeFestivalFromUser(req);
@@ -52,6 +59,7 @@ function usersController() {
         createNewUser,
         getUserById,
         addFestivalToUser,
+        getFestivalsFromUser,
         removeFestivalFromUser,
         searchFestivals
     };
