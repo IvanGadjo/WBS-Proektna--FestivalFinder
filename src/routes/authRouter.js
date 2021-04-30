@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 // Google auth callback
-router.get('/google/callback', passport.authenticate('google', { successRedirect: `${process.env.CLIENT_URL}/myFestivals`, failureRedirect: `${process.env.CLIENT_URL}` }));
+router.get('/google/callback', passport.authenticate('google', { successRedirect: `${process.env.CLIENT_URL}`, failureRedirect: `${process.env.CLIENT_URL}` }));
 
 
 router.get('/login/success', (req, res) => {
