@@ -41,13 +41,13 @@ function usersController() {
         })();
     };
     
-    const searchFestivals = (req, res, err) => {
+    const searchFestivals = (req, res) => {
         (async () => {
             const { country, genre } = req.params; 
 
-
+            
             if (!defaultMusicGenres.includes(genre))
-                err('Provided genre not in default genres list');
+                res.status(400).send('Provided genre not in default genres list');
                 
 
             const result = await sparqlService.searchFestivals(country, genre);
