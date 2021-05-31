@@ -1,6 +1,6 @@
 // const debug = require('debug')('app:usersController');
 const usersRepo = require('../repository/usersRepo');
-const sparqlService = require('../services/sparqlService');
+const sparqlService = require('../services/sparql/sparqlService');
 const defaultMusicGenres = require('../../config/defaultMusicGenres');
 
 
