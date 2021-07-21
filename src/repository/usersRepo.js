@@ -17,6 +17,9 @@ const getUserById = async (req) => {
 };
 
 const addFestivaltoUser = async (req) => {
+    // ! Tuka e frkata, treba schemata da se smeni za da prima niza od websites, locations, dates, genres
+    debug(req.body);
+
     const { name, date, website, image, genre, location } = req.body;
     const newFestival = new Festival({
         name,
