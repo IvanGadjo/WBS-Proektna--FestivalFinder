@@ -213,7 +213,7 @@ function sparqlService() {
         // debug('-------BR FEST KRAJ: ', result.length);
 
 
-        // TODO: Najloshoto resenie vo svetot
+        
         const my = new Set(filteredFestivalArray);
         filteredFestivalArray2.forEach(f => {
             if (!Array.from(my).map(ff => ff.name).includes(f.name))
